@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
+import com.example.recipecomposeapp.core.ui.theme.RecipesAppTheme
 val recipesAppTypography = Typography(
     // Заголовки экранов — Montserrat Alternates SemiBold
     displayLarge = TextStyle(
@@ -54,7 +54,7 @@ val recipesAppTypography = Typography(
 @Preview(showBackground = true)
 @Composable
 fun TypographyPreview() {
-    RecipeComposeAppTheme {
+    RecipesAppTheme {
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
