@@ -15,29 +15,34 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 val recipesAppTypography = Typography(
+    // Заголовки экранов — Montserrat Alternates SemiBold
     displayLarge = TextStyle(
         fontFamily = montserratAlternatesFontFamily,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.SemiBold,
         fontSize = 32.sp
     ),
+    // Карточки — Montserrat Alternates SemiBold
     titleMedium = TextStyle(
-        fontFamily = montserratFontFamily,
-        fontWeight = FontWeight.Bold,
+        fontFamily = montserratAlternatesFontFamily,
+        fontWeight = FontWeight.SemiBold,
         fontSize = 18.sp
     ),
+    // Основной текст — Montserrat Regular
     bodyMedium = TextStyle(
         fontFamily = montserratFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp
     ),
+    // Мелкий текст — Montserrat Regular
     bodySmall = TextStyle(
         fontFamily = montserratFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp
     ),
+    // Кнопки — Montserrat Medium
     labelLarge = TextStyle(
         fontFamily = montserratFontFamily,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.Medium,
         fontSize = 14.sp
     )
 )
