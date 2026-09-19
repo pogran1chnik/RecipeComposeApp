@@ -26,7 +26,8 @@ val recipesAppTypography = Typography(
     titleMedium = TextStyle(
         fontFamily = montserratAlternatesFontFamily,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 18.sp
+        fontSize = 16.sp,
+        lineHeight = 19.sp
     ),
     // Основной текст — Montserrat Regular
     bodyMedium = TextStyle(
@@ -39,13 +40,15 @@ val recipesAppTypography = Typography(
     bodySmall = TextStyle(
         fontFamily = montserratFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
+        fontSize = 12.sp,
+        lineHeight = 16.sp
     ),
     // Кнопки — Montserrat Medium
     labelLarge = TextStyle(
         fontFamily = montserratFontFamily,
         fontWeight = FontWeight.Medium,
-        fontSize = 14.sp
+        fontSize = 16.sp,
+        lineHeight = 19.5.sp
     )
 )
 @Preview(showBackground = true)
