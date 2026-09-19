@@ -19,7 +19,8 @@ val recipesAppTypography = Typography(
     displayLarge = TextStyle(
         fontFamily = montserratAlternatesFontFamily,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 32.sp
+        fontSize = 20.sp,
+        lineHeight = 24.sp
     ),
     // Карточки — Montserrat Alternates SemiBold
     titleMedium = TextStyle(
@@ -30,8 +31,9 @@ val recipesAppTypography = Typography(
     // Основной текст — Montserrat Regular
     bodyMedium = TextStyle(
         fontFamily = montserratFontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 14.sp
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
+        lineHeight = 16.sp
     ),
     // Мелкий текст — Montserrat Regular
     bodySmall = TextStyle(
