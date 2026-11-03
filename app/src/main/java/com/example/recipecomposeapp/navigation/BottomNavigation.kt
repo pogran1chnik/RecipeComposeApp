@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -18,7 +19,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.recipecomposeapp.core.ui.theme.Dimens
 
@@ -30,6 +30,7 @@ fun BottomNavigation(
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .navigationBarsPadding() // ← 1. Добавлен отступ от системной навигации
             .padding(horizontal = Dimens.PaddingMain),
         horizontalArrangement = Arrangement.spacedBy(Dimens.PaddingMedium),
         verticalAlignment = Alignment.CenterVertically
@@ -41,7 +42,7 @@ fun BottomNavigation(
             shape = RoundedCornerShape(Dimens.CardCornerRadius),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.tertiary,
-                contentColor = Color.White
+                contentColor = MaterialTheme.colorScheme.onTertiary // ← 2. Цвет из темы
             )
         ) {
             Text(
@@ -57,7 +58,7 @@ fun BottomNavigation(
             shape = RoundedCornerShape(Dimens.CardCornerRadius),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.error,
-                contentColor = Color.White
+                contentColor = MaterialTheme.colorScheme.onError // ← 3. Цвет из темы
             )
         ) {
             Row(
