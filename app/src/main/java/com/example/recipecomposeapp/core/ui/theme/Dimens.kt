@@ -23,4 +23,8 @@ object Dimens {
 
     /** Большой отступ (24 dp) */
     val PaddingLarge = 24.dp
+
+    /** Радиус скругления карточек и кнопок (12 dp) */
+    val CardCornerRadius = 12.dp
+
 }
