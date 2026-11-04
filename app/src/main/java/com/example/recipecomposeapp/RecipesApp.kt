@@ -16,15 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.recipecomposeapp.core.ui.navigation.BottomNavigation
 import com.example.recipecomposeapp.core.ui.theme.RecipesAppTheme
+import com.example.recipecomposeapp.ui.categories.CategoriesScreen // <-- Импорт нового экрана
 
 @Composable
 fun RecipesApp() {
-    // 1. Состояние текущего экрана
     var currentScreen by remember { mutableStateOf(ScreenId.CATEGORIES) }
 
     RecipesAppTheme {
         Scaffold(
-            // 2. Интеграция навигации в bottomBar
             bottomBar = {
                 BottomNavigation(
                     onCategoriesClick = { currentScreen = ScreenId.CATEGORIES },
@@ -32,12 +31,11 @@ fun RecipesApp() {
                 )
             }
         ) { paddingValues ->
-            // 3. Выбор контента в зависимости от состояния
             when (currentScreen) {
-                ScreenId.CATEGORIES -> CategoriesScreen(
+                ScreenId.CATEGORIES -> CategoriesScreen( // <-- Вызов нового экрана
                     modifier = Modifier.padding(paddingValues)
                 )
-                ScreenId.FAVORITES -> FavoritesScreen(
+                ScreenId.FAVORITES -> FavoritesScreen( // Заглушку избранного можно пока оставить здесь
                     modifier = Modifier.padding(paddingValues)
                 )
             }
@@ -45,22 +43,7 @@ fun RecipesApp() {
     }
 }
 
-// --- Экраны-заглушки ---
-
-@Composable
-fun CategoriesScreen(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = "Экран Категорий",
-            style = MaterialTheme.typography.displayLarge,
-            color = MaterialTheme.colorScheme.primary
-        )
-    }
-}
-
+// Временная заглушка для Избранного (можно оставить пока в этом файле)
 @Composable
 fun FavoritesScreen(modifier: Modifier = Modifier) {
     Box(

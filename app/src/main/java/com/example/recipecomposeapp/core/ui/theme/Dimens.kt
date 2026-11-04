@@ -27,4 +27,7 @@ object Dimens {
     /** Радиус скругления карточек и кнопок (12 dp) */
     val CardCornerRadius = 12.dp
 
+    /** Высота шапки экрана (200 dp) */
+    val HeaderHeight = 200.dp
+
 }
