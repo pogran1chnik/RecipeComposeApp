@@ -13,11 +13,11 @@ import com.example.recipecomposeapp.core.ui.navigation.BottomNavigation
 import com.example.recipecomposeapp.core.ui.theme.RecipesAppTheme
 import com.example.recipecomposeapp.ui.categories.CategoriesScreen
 import com.example.recipecomposeapp.ui.favorites.FavoritesScreen
-// Импортируем RecipesScreen, даже если пока не используем в навигации
 import com.example.recipecomposeapp.ui.recipes.RecipesScreen
 
 @Composable
 fun RecipesApp() {
+    // Состояние текущего экрана
     var currentScreen by remember { mutableStateOf(ScreenId.CATEGORIES) }
 
     RecipesAppTheme {
@@ -25,10 +25,12 @@ fun RecipesApp() {
             bottomBar = {
                 BottomNavigation(
                     onCategoriesClick = { currentScreen = ScreenId.CATEGORIES },
-                    onFavoriteClick = { currentScreen = ScreenId.FAVORITES }
+                    onFavoriteClick = { currentScreen = ScreenId.FAVORITES },
+                    onRecipesClick = { currentScreen = ScreenId.RECIPES } // Передаем коллбэк
                 )
             }
         ) { paddingValues ->
+            // Переключение контента в зависимости от текущего экрана
             when (currentScreen) {
                 ScreenId.CATEGORIES -> CategoriesScreen(
                     modifier = Modifier.padding(paddingValues)
@@ -36,10 +38,9 @@ fun RecipesApp() {
                 ScreenId.FAVORITES -> FavoritesScreen(
                     modifier = Modifier.padding(paddingValues)
                 )
-                // Если вы добавите ScreenId.RECIPES в enum, раскомментируйте это:
-                // ScreenId.RECIPES -> RecipesScreen(
-                //     modifier = Modifier.padding(paddingValues)
-                // )
+                ScreenId.RECIPES -> RecipesScreen(
+                    modifier = Modifier.padding(paddingValues)
+                )
             }
         }
     }

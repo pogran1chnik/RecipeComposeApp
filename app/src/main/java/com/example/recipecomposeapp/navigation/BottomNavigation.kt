@@ -25,24 +25,25 @@ import com.example.recipecomposeapp.core.ui.theme.Dimens
 @Composable
 fun BottomNavigation(
     onCategoriesClick: () -> Unit,
-    onFavoriteClick: () -> Unit
+    onFavoriteClick: () -> Unit,
+    onRecipesClick: () -> Unit // <-- Добавлен коллбэк для рецептов
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .navigationBarsPadding() // ← 1. Добавлен отступ от системной навигации
+            .navigationBarsPadding() // Отступ от системной навигации
             .padding(horizontal = Dimens.PaddingMain),
         horizontalArrangement = Arrangement.spacedBy(Dimens.PaddingMedium),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Кнопка "Категории"
+        // 1. Кнопка "Категории"
         Button(
             onClick = onCategoriesClick,
             modifier = Modifier.weight(1f),
             shape = RoundedCornerShape(Dimens.CardCornerRadius),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.tertiary,
-                contentColor = MaterialTheme.colorScheme.onTertiary // ← 2. Цвет из темы
+                contentColor = MaterialTheme.colorScheme.onTertiary
             )
         ) {
             Text(
@@ -51,14 +52,14 @@ fun BottomNavigation(
             )
         }
 
-        // Кнопка "Избранное" с иконкой
+        // 2. Кнопка "Избранное" с иконкой
         Button(
             onClick = onFavoriteClick,
             modifier = Modifier.weight(1f),
             shape = RoundedCornerShape(Dimens.CardCornerRadius),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.error,
-                contentColor = MaterialTheme.colorScheme.onError // ← 3. Цвет из темы
+                contentColor = MaterialTheme.colorScheme.onError
             )
         ) {
             Row(
@@ -76,6 +77,22 @@ fun BottomNavigation(
                     modifier = Modifier.size(18.dp)
                 )
             }
+        }
+
+        // 3. Кнопка "Рецепты"
+        Button(
+            onClick = onRecipesClick,
+            modifier = Modifier.weight(1f),
+            shape = RoundedCornerShape(Dimens.CardCornerRadius),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
+            )
+        ) {
+            Text(
+                text = "Рецепты".uppercase(),
+                style = MaterialTheme.typography.titleMedium
+            )
         }
     }
 }

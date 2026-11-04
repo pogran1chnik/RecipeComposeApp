@@ -14,7 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import com.example.recipecomposeapp.R
 import com.example.recipecomposeapp.core.ui.theme.Dimens
-import com.example.recipecomposeapp.ui.components.ScreenHeader
+import com.example.recipecomposeapp.core.ui.components.ScreenHeader
+
 
 @Composable
 fun CategoriesScreen(modifier: Modifier = Modifier) {
@@ -22,7 +23,11 @@ fun CategoriesScreen(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxSize()
     ) {
-        // 1. Красивая шапка с изображением
+        ScreenHeader(
+            imagePainter = painterResource(id = R.drawable.ic_launcher_foreground), // или ваша картинка
+            contentDescription = "Обложка категорий",
+            title = "Категории"
+        )
 
 
         // 2. Заглушка для будущего списка категорий
