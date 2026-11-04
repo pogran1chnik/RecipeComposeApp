@@ -23,11 +23,7 @@ fun CategoriesScreen(modifier: Modifier = Modifier) {
             .fillMaxSize()
     ) {
         // 1. Красивая шапка с изображением
-        ScreenHeader(
-            imagePainter = painterResource(id = R.drawable.ic_launcher_foreground), // Замените на свою картинку из drawable
-            contentDescription = "Обложка категорий",
-            title = "Категории"
-        )
+
 
         // 2. Заглушка для будущего списка категорий
         LazyColumn(
