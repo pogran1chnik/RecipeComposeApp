@@ -30,4 +30,12 @@ object Dimens {
     /** Высота шапки экрана (224 dp) */
     val HeaderHeight = 224.dp
 
+    val ElevationSmall = 2.dp
+
+    /** Тень по умолчанию (4 dp) */
+    val ElevationDefault = 4.dp
+
+    /** Большая тень (8 dp) */
+    val ElevationLarge = 8.dp
+
 }

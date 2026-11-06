@@ -33,7 +33,11 @@ fun RecipesApp() {
             // Переключение контента в зависимости от текущего экрана
             when (currentScreen) {
                 ScreenId.CATEGORIES -> CategoriesScreen(
-                    modifier = Modifier.padding(paddingValues)
+                    modifier = Modifier.padding(paddingValues),
+                    onCategoryClick = { categoryId ->
+                        // Пока просто выводим в лог, чтобы убедиться, что клик работает
+                        println("Нажата категория с ID: $categoryId")
+                    }
                 )
                 ScreenId.FAVORITES -> FavoritesScreen(
                     modifier = Modifier.padding(paddingValues)
