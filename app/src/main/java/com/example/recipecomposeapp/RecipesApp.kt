@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -17,32 +18,47 @@ import com.example.recipecomposeapp.ui.recipes.RecipesScreen
 
 @Composable
 fun RecipesApp() {
-    // Состояние текущего экрана
+    // 1. Состояние текущего экрана
     var currentScreen by remember { mutableStateOf(ScreenId.CATEGORIES) }
+
+    // 2. Новые состояния для выбранной категории
+    var selectedCategoryId by remember { mutableIntStateOf(0) }
+    var selectedCategoryTitle by remember { mutableStateOf("") }
 
     RecipesAppTheme {
         Scaffold(
             bottomBar = {
-                BottomNavigation(
-                    onCategoriesClick = { currentScreen = ScreenId.CATEGORIES },
-                    onFavoriteClick = { currentScreen = ScreenId.FAVORITES },
-                    onRecipesClick = { currentScreen = ScreenId.RECIPES } // Передаем коллбэк
-                )
+                // Если мы не на экране категорий, можно скрывать нижнюю навигацию (опционально)
+                if (currentScreen != ScreenId.RECIPES) {
+                    BottomNavigation(
+                        onCategoriesClick = { currentScreen = ScreenId.CATEGORIES },
+                        onFavoriteClick = { currentScreen = ScreenId.FAVORITES },
+                        onRecipesClick = { currentScreen = ScreenId.RECIPES }
+                    )
+                }
             }
         ) { paddingValues ->
-            // Переключение контента в зависимости от текущего экрана
             when (currentScreen) {
                 ScreenId.CATEGORIES -> CategoriesScreen(
                     modifier = Modifier.padding(paddingValues),
-                    onCategoryClick = { categoryId ->
-                        // Пока просто выводим в лог, чтобы убедиться, что клик работает
-                        println("Нажата категория с ID: $categoryId")
+                    onCategoryClick = { id, title ->
+                        // Сохраняем данные выбранной категории
+                        selectedCategoryId = id
+                        selectedCategoryTitle = title
+                        // Переходим на экран рецептов
+                        currentScreen = ScreenId.RECIPES
                     }
                 )
                 ScreenId.FAVORITES -> FavoritesScreen(
                     modifier = Modifier.padding(paddingValues)
                 )
                 ScreenId.RECIPES -> RecipesScreen(
+                    categoryId = selectedCategoryId,
+                    categoryTitle = selectedCategoryTitle,
+                    onRecipeClick = { recipeId ->
+                        // Здесь в будущем будет переход на детальный экран рецепта
+                        println("Выбран рецепт с ID: $recipeId")
+                    },
                     modifier = Modifier.padding(paddingValues)
                 )
             }

@@ -21,7 +21,7 @@ import com.example.recipecomposeapp.ui.categories.model.toUiModel
 @Composable
 fun CategoriesScreen(
     modifier: Modifier = Modifier,
-    onCategoryClick: (Int) -> Unit
+    onCategoryClick: (Int, String)  -> Unit
 ) {
     // Загружаем данные из заглушки и мапим в UI-модели (через remember, чтобы не пересчитывать при рекомпозиции)
     val categories = remember { getCategories().map { it.toUiModel() } }
@@ -45,7 +45,8 @@ fun CategoriesScreen(
             items(categories, key = { it.id }) { category ->
                 CategoryItem(
                     category = category,
-                    onClick = { onCategoryClick(category.id) }
+                    // Передаем и ID, и Title
+                    onClick = { onCategoryClick(category.id, category.title) }
                 )
             }
         }
