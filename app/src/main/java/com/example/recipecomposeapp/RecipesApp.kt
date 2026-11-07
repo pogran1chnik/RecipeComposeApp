@@ -91,10 +91,7 @@ fun RecipesApp() {
                         categoryTitle = categoryTitle,
                         onRecipeClick = { recipeId, recipeObject ->
                             // СОХРАНЯЕМ ОБЪЕКТ В savedStateHandle текущего экрана
-                            navController.currentBackStackEntry?.savedStateHandle?.set(
-                                KEY_RECIPE_OBJECT,
-                                recipeObject
-                            )
+
                             // Переходим на экран деталей
                             navController.navigate(Destination.RecipeDetails.createRoute(recipeId))
                         }
@@ -106,21 +103,15 @@ fun RecipesApp() {
                     route = Destination.RecipeDetails.route,
                     arguments = listOf(navArgument("recipeId") { type = NavType.IntType })
                 ) { backStackEntry ->
-                    // ДОСТАЕМ ОБЪЕКТ ИЗ savedStateHandle предыдущего экрана
-                    val recipe = navController.previousBackStackEntry
-                        ?.savedStateHandle
-                        ?.get<RecipeUiModel>(KEY_RECIPE_OBJECT)
-
-                    if (recipe != null) {
-                        RecipeDetailsScreen(recipe = recipe)
-                    } else {
-                        Text("Ошибка: Рецепт не найден")
+                    val recipeId = backStackEntry.arguments?.getInt("recipeId") ?: 0
+                    RecipeDetailsScreen(recipeId = recipeId)
+                }
                     }
                 }
             }
         }
-    }
-}
+
+
 
 @Preview(showBackground = true)
 @Composable
