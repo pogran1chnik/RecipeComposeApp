@@ -1,15 +1,22 @@
 package com.example.recipecomposeapp
 
 sealed class Destination(val route: String) {
-    // Главные экраны (без параметров)
     data object Categories : Destination("categories")
     data object Favorites : Destination("favorites")
 
-    // Экран списка рецептов (принимает ID и название категории)
     data object Recipes : Destination("recipes/{categoryId}/{categoryTitle}") {
-        // Функция для создания правильного URL при навигации
         fun createRoute(categoryId: Int, categoryTitle: String): String {
             return "recipes/$categoryId/$categoryTitle"
         }
     }
+
+    // Новый экран деталей
+    data object RecipeDetails : Destination("recipe/{recipeId}") {
+        fun createRoute(recipeId: Int): String {
+            return "recipe/$recipeId"
+        }
+    }
 }
+
+// Ключ для передачи сложного объекта (RecipeUiModel) через savedStateHandle
+const val KEY_RECIPE_OBJECT = "recipe_object"

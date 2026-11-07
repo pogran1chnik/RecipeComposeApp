@@ -30,7 +30,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 fun RecipesScreen(
     categoryId: Int,
     categoryTitle: String,
-    onRecipeClick: (Int) -> Unit,
+    onRecipeClick: (Int, RecipeUiModel) -> Unit, // <-- Теперь принимает объект
     modifier: Modifier = Modifier
 ) {
     // Состояние для хранения списка рецептов
@@ -71,7 +71,7 @@ fun RecipesScreen(
                 items(recipes, key = { it.id }) { recipe ->
                     RecipeItem(
                         recipe = recipe,
-                        onClick = onRecipeClick
+                        onClick = { id -> onRecipeClick(id, recipe) } // <-- Передаем оба параметра
                     )
                 }
             }

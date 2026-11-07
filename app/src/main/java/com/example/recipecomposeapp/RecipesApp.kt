@@ -2,6 +2,7 @@ package com.example.recipecomposeapp
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -14,22 +15,23 @@ import androidx.navigation.navArgument
 import com.example.recipecomposeapp.core.ui.navigation.BottomNavigation
 import com.example.recipecomposeapp.core.ui.theme.RecipesAppTheme
 import com.example.recipecomposeapp.ui.categories.CategoriesScreen
+import com.example.recipecomposeapp.ui.details.RecipeDetailsScreen
 import com.example.recipecomposeapp.ui.favorites.FavoritesScreen
 import com.example.recipecomposeapp.ui.recipes.RecipesScreen
+import com.example.recipecomposeapp.ui.recipes.model.RecipeUiModel
 
 @Composable
 fun RecipesApp() {
-    // Создаем контроллер навигации
     val navController = rememberNavController()
 
-    // Получаем текущий маршрут, чтобы скрывать/показывать нижнюю панель
+    // Получаем текущий маршрут для управления видимостью нижней панели
     val navBackStackEntry = navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry.value?.destination?.route
 
     RecipesAppTheme {
         Scaffold(
             bottomBar = {
-                // Показываем нижнюю навигацию только на главных экранах
+                // Показываем нижнюю навигацию только на главных экранах (Категории/Избранное)
                 if (currentRoute == Destination.Categories.route || currentRoute == Destination.Favorites.route) {
                     BottomNavigation(
                         onCategoriesClick = {
@@ -47,15 +49,13 @@ fun RecipesApp() {
                             }
                         },
                         onRecipesClick = {
-                            // Временная кнопка "Рецепты" в нижнем меню.
-                            // Пока открывает рецепты категории 0 (Бургеры)
+                            // Временная кнопка. Открывает рецепты категории 0
                             navController.navigate(Destination.Recipes.createRoute(0, "Бургеры"))
                         }
                     )
                 }
             }
         ) { paddingValues ->
-            // Навигационный граф
             NavHost(
                 navController = navController,
                 startDestination = Destination.Categories.route,
@@ -65,7 +65,6 @@ fun RecipesApp() {
                 composable(Destination.Categories.route) {
                     CategoriesScreen(
                         onCategoryClick = { id, title ->
-                            // Переходим на экран рецептов, передавая параметры в URL
                             navController.navigate(Destination.Recipes.createRoute(id, title))
                         }
                     )
@@ -76,7 +75,7 @@ fun RecipesApp() {
                     FavoritesScreen()
                 }
 
-                // 3. Экран Рецептов (с параметрами)
+                // 3. Экран Списка рецептов
                 composable(
                     route = Destination.Recipes.route,
                     arguments = listOf(
@@ -84,17 +83,39 @@ fun RecipesApp() {
                         navArgument("categoryTitle") { type = NavType.StringType }
                     )
                 ) { backStackEntry ->
-                    // Достаем параметры из URL
                     val categoryId = backStackEntry.arguments?.getInt("categoryId") ?: 0
                     val categoryTitle = backStackEntry.arguments?.getString("categoryTitle") ?: ""
 
                     RecipesScreen(
                         categoryId = categoryId,
                         categoryTitle = categoryTitle,
-                        onRecipeClick = { recipeId ->
-                            println("Выбран рецепт с ID: $recipeId")
+                        onRecipeClick = { recipeId, recipeObject ->
+                            // СОХРАНЯЕМ ОБЪЕКТ В savedStateHandle текущего экрана
+                            navController.currentBackStackEntry?.savedStateHandle?.set(
+                                KEY_RECIPE_OBJECT,
+                                recipeObject
+                            )
+                            // Переходим на экран деталей
+                            navController.navigate(Destination.RecipeDetails.createRoute(recipeId))
                         }
                     )
+                }
+
+                // 4. Экран Деталей рецепта
+                composable(
+                    route = Destination.RecipeDetails.route,
+                    arguments = listOf(navArgument("recipeId") { type = NavType.IntType })
+                ) { backStackEntry ->
+                    // ДОСТАЕМ ОБЪЕКТ ИЗ savedStateHandle предыдущего экрана
+                    val recipe = navController.previousBackStackEntry
+                        ?.savedStateHandle
+                        ?.get<RecipeUiModel>(KEY_RECIPE_OBJECT)
+
+                    if (recipe != null) {
+                        RecipeDetailsScreen(recipe = recipe)
+                    } else {
+                        Text("Ошибка: Рецепт не найден")
+                    }
                 }
             }
         }
