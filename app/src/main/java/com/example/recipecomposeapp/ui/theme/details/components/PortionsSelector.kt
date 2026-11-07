@@ -35,8 +35,8 @@ fun PortionsSelector(
         Slider(
             value = portions.toFloat(),
             onValueChange = { onPortionsChange(it.toInt()) },
-            valueRange = 1f..10f,
-            steps = 8, // 10 - 1 - 1 = 8 промежуточных шагов
+            valueRange = 1f..10f, // от 1 до 10 порций
+            steps = 8, // 10 - 1 - 1 = 8
             modifier = Modifier.padding(top = Dimens.PaddingMedium)
         )
     }

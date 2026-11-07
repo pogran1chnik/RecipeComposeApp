@@ -42,7 +42,7 @@ fun RecipeDetailsScreen(
         return
     }
 
-    var portions by remember { mutableIntStateOf(1) }
+    var portions by remember { mutableIntStateOf(recipe.basePortions) }
     val scrollState = rememberScrollState()
 
     Column(
@@ -75,21 +75,23 @@ fun RecipeDetailsScreen(
             Spacer(modifier = Modifier.height(Dimens.PaddingMedium))
 
             // Пересчитываем количество ингредиентов в зависимости от порций
-            val adjustedIngredients = remember(portions, recipe.ingredients) {
+            val adjustedIngredients = remember(portions, recipe.ingredients, recipe.basePortions) {
                 recipe.ingredients.map { ingredient ->
                     val originalQuantity = ingredient.quantity.toDoubleOrNull()
                     if (originalQuantity != null) {
-                        val newQuantity = originalQuantity * portions
-                        // Форматируем обратно в строку (убираем лишние нули)
+                        // Считаем пропорционально: (исходное * выбранное) / базовое
+                        val newQuantity = (originalQuantity * portions) / recipe.basePortions
+
+                        // Форматируем обратно в строку (убираем лишние нули после запятой)
                         val formattedQuantity = if (newQuantity % 1.0 == 0.0) {
                             newQuantity.toInt().toString()
                         } else {
-                            newQuantity.toString()
+                            // Округляем до 2 знаков после запятой, если есть дробная часть
+                            String.format("%.2f", newQuantity).replace(",", ".").trimEnd('0').trimEnd('.')
                         }
                         ingredient.copy(quantity = formattedQuantity)
                     } else {
-                        // Если количество "по вкусу", оставляем как есть
-                        ingredient
+                        ingredient // "по вкусу" оставляем без изменений
                     }
                 }
             }
