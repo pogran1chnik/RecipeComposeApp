@@ -11,15 +11,16 @@ import androidx.compose.runtime.setValue
 
 class MainActivity : ComponentActivity() {
 
-    // Состояние для хранения Intent
     private var deepLinkIntent by mutableStateOf<Intent?>(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // Проверяем, запущено ли приложение по ссылке
-        deepLinkIntent = intent
+        // Передаем стартовый Intent ТОЛЬКО при первом создании Activity (а не при повороте)
+        if (savedInstanceState == null) {
+            deepLinkIntent = intent
+        }
 
         setContent {
             RecipesApp(deepLinkIntent = deepLinkIntent)
@@ -29,6 +30,7 @@ class MainActivity : ComponentActivity() {
     // Вызывается, если приложение уже открыто (warm start) и пришла новая ссылка
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        deepLinkIntent = intent
+        setIntent(intent) // Важно: обновляем базовый intent
+        deepLinkIntent = intent // Обновляем состояние для Compose
     }
 }
