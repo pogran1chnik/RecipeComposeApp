@@ -67,7 +67,7 @@ private val burgerRecipes = listOf(
             "Смазать нижние половинки булочек горчицей и кетчупом, затем положите лист салата, котлету, кольца помидора и закройте верхней половинкой булочки.",
             "Подавайте бургеры горячими с картофельными чипсами или картофельным пюре."
         ),
-        imageUrl = "burger-hamburger.png"
+        imageUrl = "burger.png"
     ),
     RecipeDto(
         id = 1,
@@ -87,7 +87,7 @@ private val burgerRecipes = listOf(
             "Соберите бургер: булочка, майонез, котлета с сыром, бекон, помидор, кетчуп.",
             "Подавайте горячими."
         ),
-        imageUrl = "burger-cheeseburger.png"
+        imageUrl = "burger.png"
     )
 )
 

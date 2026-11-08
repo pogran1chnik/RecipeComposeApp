@@ -10,13 +10,10 @@ sealed class Destination(val route: String) {
         }
     }
 
-    // Новый экран деталей
-    data object RecipeDetails : Destination("recipe/{recipeId}") {
+    // Обновляем маршрут деталей
+    data object RecipeDetails : Destination("recipe/{$PARAM_RECIPE_ID}") {
         fun createRoute(recipeId: Int): String {
             return "recipe/$recipeId"
         }
     }
 }
-
-// Ключ для передачи сложного объекта (RecipeUiModel) через savedStateHandle
-const val KEY_RECIPE_OBJECT = "recipe_object"

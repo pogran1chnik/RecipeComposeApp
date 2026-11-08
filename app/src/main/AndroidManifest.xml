@@ -14,13 +14,31 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.RecipeComposeApp"
-            android:windowSoftInputMode="adjustResize">
+            android:launchMode="singleTop"> <!-- Добавлено singleTop -->
+
+            <!-- Существующий фильтр для запуска приложения -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- Deep Link: Custom Scheme (recipeapp://) -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="recipeapp" android:host="recipe" />
+            </intent-filter>
+
+            <!-- Deep Link: HTTPS (https://recipes.aisprints.ru) -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="recipes.aisprints.ru"
+                    android:pathPrefix="/recipe/" />
             </intent-filter>
         </activity>
     </application>
